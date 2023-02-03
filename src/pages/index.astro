@@ -1,6 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import VideoCard from "../components/VideoCard.astro";
+
+interface Video {
+  id: string;
+  title: string;
+  thumbnail: string;
+  embedUrl: string;
+}
+
+const response = await fetch("http://localhost:3000/api/getAllVideos");
+const videos: Video[] = await response.json();
 ---
 
 <Layout title="Welcome to Astro.">
@@ -22,12 +32,11 @@ import VideoCard from "../components/VideoCard.astro";
       <section
         class="py-8 px-4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-start gap-8"
       >
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
+        {
+          videos.map((video) => (
+            <VideoCard title={video.title} thumbnail={video.thumbnail} />
+          ))
+        }
       </section>
     </div>
   </main>

@@ -1,0 +1,50 @@
+---
+import type { Video } from "../../lib/types";
+import Layout from "../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const websiteId: string = import.meta.env.WEBSITE_ID;
+
+  const response = await fetch(
+    `http://localhost:3000/api/getAllVideos?websiteId=${websiteId}`
+  );
+
+  const videos: Video[] = await response.json();
+
+  return videos.map((video) => {
+    return {
+      params: { id: video.id },
+    };
+  });
+}
+
+const { id } = Astro.params;
+
+const response = await fetch(
+  `http://localhost:3000/api/getVideo?videoId=${id}`
+);
+
+const video: Video = await response.json();
+---
+
+<Layout title={video.title}>
+  <main class="min-h-screen w-full flex flex-col">
+    <div class="sticky top-0 z-10">
+      <nav
+        class="navbar bg-base-100 flex flex-col sm:flex-row gap-2 justify-between items-center px-4 py-4 backdrop-blur-sm bg-opacity-70"
+      >
+        <a class="btn btn-ghost normal-case text-xl" href="/">Your Website</a>
+        <input
+          type="text"
+          placeholder="Type here"
+          class="input input-bordered w-full max-w-2xl"
+        />
+      </nav>
+      <div class="h-0.5 bg-primary"></div>
+    </div>
+    <div class="grow bg-base-300 flex flex-col">
+      <iframe allowfullscreen class="w-full grow" src={video.embedUrl}></iframe>
+      <h1>{video.title}</h1>
+    </div>
+  </main>
+</Layout>

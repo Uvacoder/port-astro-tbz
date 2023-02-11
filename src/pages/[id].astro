@@ -1,6 +1,8 @@
 ---
-import type { Video } from "../../lib/types";
+import type { Video } from "../lib/types";
+import Search from "../components/search";
 import Layout from "../layouts/Layout.astro";
+import Sidebar from "../components/sidebar";
 
 export async function getStaticPaths() {
   const websiteId: string = import.meta.env.WEBSITE_ID;
@@ -34,17 +36,20 @@ const video: Video = await response.json();
         class="navbar bg-base-100 flex flex-col sm:flex-row gap-2 justify-between items-center px-4 py-4 backdrop-blur-sm bg-opacity-70"
       >
         <a class="btn btn-ghost normal-case text-xl" href="/">Your Website</a>
-        <input
-          type="text"
-          placeholder="Type here"
-          class="input input-bordered w-full max-w-2xl"
-        />
+        <Search client:visible />
       </nav>
       <div class="h-0.5 bg-primary"></div>
     </div>
-    <div class="grow bg-base-300 flex flex-col">
-      <iframe allowfullscreen class="w-full grow" src={video.embedUrl}></iframe>
-      <h1>{video.title}</h1>
+    <div class="grow bg-base-300 flex flex-col lg:flex-row w-full">
+      <div
+        class="grow flex flex-col h-[calc(100vh-136px)] sm:h-[calc(100vh-82px)]"
+      >
+        <iframe allowfullscreen class="w-full grow" src={video.embedUrl}
+        ></iframe>
+        <h1 class="p-4 text-2xl">{video.title}</h1>
+      </div>
+      <div class="divider m-0 divider-horizontal"></div>
+      <Sidebar video={video} client:load />
     </div>
   </main>
 </Layout>

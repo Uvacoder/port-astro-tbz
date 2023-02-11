@@ -3,4 +3,6 @@ export interface Video {
   title: string;
   thumbnail: string;
   embedUrl: string;
+  categories: string;
+  tags: string;
 }

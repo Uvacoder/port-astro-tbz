@@ -4,8 +4,6 @@ import VideoCard from "../components/VideoCard.astro";
 import type { Video } from "../lib/types";
 import Search from "../components/search";
 
-const mode = import.meta.env.MODE;
-
 const websiteId: string = import.meta.env.WEBSITE_ID;
 
 const response = await fetch(
@@ -21,18 +19,18 @@ const videos: Video[] = await response.json();
       <nav
         class="navbar bg-base-100 flex flex-col sm:flex-row gap-2 justify-between items-center px-4 py-4 backdrop-blur-sm bg-opacity-70"
       >
-        <a class="btn btn-ghost normal-case text-xl">Your Website</a>
+        <a href="/" class="btn btn-ghost normal-case text-xl">Your Website</a>
         <Search client:visible />
       </nav>
       <div class="h-0.5 bg-primary"></div>
     </div>
     <div class="grow bg-base-300">
       <section
-        class="py-8 px-4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-start gap-8"
+        class="py-8 px-4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
       >
         {
           videos.map((video) => (
-            <a href={`/${video.id}`}>
+            <a class="h-full" href={`/${video.id}`}>
               <VideoCard title={video.title} thumbnail={video.thumbnail} />
             </a>
           ))
@@ -40,16 +38,4 @@ const videos: Video[] = await response.json();
       </section>
     </div>
   </main>
-  <div id="mode" hidden data-mode={mode}></div>
 </Layout>
-
-<script>
-  import { getLyraDB, search } from "../lib/lyra";
-
-  const mode = document.getElementById("mode")?.dataset.mode;
-
-  const db = await getLyraDB(mode);
-
-  window.search = search;
-  window.db = db;
-</script>

@@ -1,44 +1,51 @@
 import { useStore } from "@nanostores/preact";
 import { searchAtom } from "../stores/search";
-import { useEffect, useState } from "preact/hooks";
-import type { SearchResult } from "@lyrasearch/lyra";
+import { useState } from "preact/hooks";
+import type { PropertiesSchema, SearchResult } from "@lyrasearch/lyra";
+import useDb from "../hooks/use-db";
 
 const Search = () => {
   const $search = useStore(searchAtom);
 
+  const { db, search } = useDb();
+
   const [searchResult, setSearchResult] =
-    useState<SearchResult<typeof window.db.schema>>();
+    useState<SearchResult<PropertiesSchema>>();
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-xl">
       <input
         value={$search}
         onInput={async (e) => {
           searchAtom.set(e.currentTarget.value);
 
-          const result = await window.search(window.db, {
+          if (!db) return;
+
+          const result = await search(db, {
             term: e.currentTarget.value,
           });
-
-          console.log(result);
 
           setSearchResult(result);
         }}
         type="text"
         placeholder="Type here"
-        class="input input-bordered w-96 max-w-2xl"
+        class="input input-bordered w-full"
       />
       <div
-        className={`absolute bg-base-300 mt-2 rounded-xl w-full ${
+        className={`absolute bg-base-200 max-h-96 overflow-y-scroll mt-2 rounded-xl w-full ${
           searchResult && searchResult?.count > 0 ? null : "hidden"
         }`}
       >
-        {searchResult?.hits.slice(0, 5).map((hit) => (
-          <a href={`${hit.document.id}`}>
-            <div
-              className="hover:bg-primary hover:text-primary-content rounded-xl p-2"
-              key={hit.id}
-            >
+        {searchResult?.hits.slice(0, 4).map((hit) => (
+          <a key={hit.id} href={`${hit.document.id}`}>
+            <div className="hover:bg-primary hover:text-primary-content rounded-xl p-2 flex items-center gap-4">
+              <img
+                className="rounded-md"
+                height={90}
+                width={160}
+                src={hit.document.thumbnail as string}
+                alt={hit.document.title as string}
+              />
               <h3>{hit.document.title}</h3>
             </div>
           </a>

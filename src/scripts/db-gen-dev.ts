@@ -16,6 +16,9 @@ const db = await create({
   schema: {
     title: "string",
     id: "string",
+    thumbnail: "string",
+    categories: "string",
+    tags: "string",
   },
 });
 
@@ -23,6 +26,9 @@ for (const video of videos) {
   await insert(db, {
     title: video.title,
     id: video.id,
+    thumbnail: video.thumbnail,
+    categories: video.categories,
+    tags: video.tags,
   });
 }
 

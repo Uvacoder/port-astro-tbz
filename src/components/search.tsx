@@ -37,7 +37,7 @@ const Search = () => {
         }`}
       >
         {searchResult?.hits.slice(0, 4).map((hit) => (
-          <a key={hit.id} href={`${hit.document.id}`}>
+          <a key={hit.id} href={`/${hit.document.id}`}>
             <div className="hover:bg-primary hover:text-primary-content rounded-xl p-2 flex items-center gap-4">
               <img
                 className="rounded-md"

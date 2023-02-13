@@ -44,7 +44,7 @@ const Sidebar = ({ video }: Props) => {
     <div className="w-full p-2 lg:w-1/3">
       <div className="text-2xl font-bold pl-2 mb-2">Similar videos</div>
       {videos?.map((video) => (
-        <a key={video.id} href={`${video.id}`}>
+        <a key={video.id} href={`/${video.id}`}>
           <div className="hover:bg-primary hover:text-primary-content rounded-xl p-2 flex items-center gap-4">
             <img
               className="rounded-md"

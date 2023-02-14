@@ -32,13 +32,13 @@ const Search = () => {
         class="input input-bordered w-full"
       />
       <div
-        className={`absolute bg-base-200 max-h-96 overflow-y-scroll mt-2 rounded-xl w-full ${
+        className={`absolute bg-base-200 max-h-[408px] overflow-y-scroll scrollbar-thin mt-2 rounded-xl w-full ${
           searchResult && searchResult?.count > 0 ? null : "hidden"
         }`}
       >
         {searchResult?.hits.slice(0, 4).map((hit) => (
           <a key={hit.id} href={`/${hit.document.id}`}>
-            <div className="hover:bg-primary hover:text-primary-content rounded-xl p-2 flex items-center gap-4">
+            <div className="hover:bg-primary hover:text-primary-content transition-all rounded-xl p-2 flex items-center gap-4">
               <img
                 className="rounded-md"
                 height={90}

@@ -3,6 +3,7 @@ import type { Video } from "../lib/types";
 import Search from "../components/search";
 import Layout from "../layouts/Layout.astro";
 import Sidebar from "../components/sidebar";
+import Navbar from "../components/Navbar.astro";
 
 export async function getStaticPaths() {
   const websiteId: string = import.meta.env.WEBSITE_ID;
@@ -31,24 +32,16 @@ const video: Video = await response.json();
 
 <Layout title={video.title}>
   <main class="min-h-screen w-full flex flex-col">
-    <div class="sticky top-0 z-10">
-      <nav
-        class="navbar bg-base-100 flex flex-col sm:flex-row gap-2 justify-between items-center px-4 py-4 backdrop-blur-sm bg-opacity-70"
-      >
-        <a class="btn btn-ghost normal-case text-xl" href="/">Your Website</a>
-        <Search client:visible />
-      </nav>
-      <div class="h-0.5 bg-primary"></div>
-    </div>
-    <div class="grow bg-base-300 flex flex-col lg:flex-row w-full">
-      <div
-        class="grow flex flex-col h-[calc(100vh-136px)] sm:h-[calc(100vh-82px)]"
-      >
+    <Navbar />
+    <div
+      class="grow bg-base-100 flex flex-col lg:flex-row w-full h-[calc(100vh-136px)] sm:h-[calc(100vh-82px)]"
+    >
+      <div class="grow flex flex-col">
         <iframe allowfullscreen class="w-full grow" src={video.embedUrl}
         ></iframe>
         <h1 class="p-4 text-2xl">{video.title}</h1>
       </div>
-      <div class="divider m-0 divider-horizontal"></div>
+      <div class="divider w-1 m-0 divider-horizontal"></div>
       <Sidebar video={video} client:load />
     </div>
   </main>

@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import VideoCard from "../components/VideoCard.astro";
+import Navbar from "../components/Navbar.astro";
 import type { Video } from "../lib/types";
 import Search from "../components/search";
 
@@ -15,16 +16,8 @@ const videos: Video[] = await response.json();
 
 <Layout title="Welcome to Astro.">
   <main class="min-h-screen w-full flex flex-col">
-    <div class="sticky top-0 z-10">
-      <nav
-        class="navbar bg-base-100 flex flex-col sm:flex-row gap-2 justify-between items-center px-4 py-4 backdrop-blur-sm bg-opacity-70"
-      >
-        <a href="/" class="btn btn-ghost normal-case text-xl">Your Website</a>
-        <Search client:visible />
-      </nav>
-      <div class="h-0.5 bg-primary"></div>
-    </div>
-    <div class="grow bg-base-300">
+    <Navbar />
+    <div class="grow bg-base-100">
       <section
         class="py-8 px-4 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
       >

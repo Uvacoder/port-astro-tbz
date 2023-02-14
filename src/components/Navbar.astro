@@ -1,0 +1,15 @@
+---
+import Search from "./search";
+
+const websiteName = import.meta.env.WEBSITE_NAME;
+---
+
+<div class="sticky top-0 z-10">
+  <nav
+    class="navbar bg-base-100 flex flex-col sm:flex-row gap-2 justify-between items-center px-4 py-4 backdrop-blur-sm bg-opacity-70"
+  >
+    <a href="/" class="btn btn-ghost normal-case text-xl">{websiteName}</a>
+    <Search client:visible />
+  </nav>
+  <div class="h-0.5 bg-primary"></div>
+</div>

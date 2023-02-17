@@ -35,6 +35,10 @@ for (const video of videos) {
 
 fs.mkdirSync("./dist/assets", { recursive: true });
 
-const filePath = await persistToFile(db, "json", "./dist/assets/db.json");
+const filePath = await persistToFile(db, "json", "./dist/assets/db.js");
 
-console.log(`Lyra db generated at ${filePath}`);
+// const dbData = fs.readFileSync(filePath, "utf8");
+
+// fs.writeFileSync(filePath, "export default " + dbData, "utf8");
+
+console.log(`Lyra db generated at ${filePath}\n`);

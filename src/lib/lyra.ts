@@ -6,10 +6,10 @@ export async function getLyraDB(
 ): Promise<Lyra<PropertiesSchema>> {
   const db = await createLyraDB({ schema: { _: "string" }, edge: true });
 
-  let path = "/assets/db.json";
+  let path = "/assets/db.js";
 
   if (mode === "development") {
-    path = "/dev-data/db.json";
+    path = "/dev-data/db.js";
   }
 
   const dbResponse = await fetch(path);

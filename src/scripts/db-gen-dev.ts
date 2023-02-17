@@ -1,6 +1,7 @@
 import { create, insert } from "@lyrasearch/lyra";
 import { persistToFile } from "@lyrasearch/plugin-data-persistence";
 import type { Video } from "../lib/types";
+import fs from "fs";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -32,6 +33,10 @@ for (const video of videos) {
   });
 }
 
-const filePath = await persistToFile(db, "json", "./dev-data/db.json");
+const filePath = await persistToFile(db, "json", "./dev-data/db.js");
 
-console.log(`Lyra db generated at ${filePath}`);
+// const dbData = fs.readFileSync(filePath, "utf8");
+
+// fs.writeFileSync(filePath, "export default " + dbData, "utf8");
+
+console.log(`Lyra db generated at ${filePath}\n`);
